@@ -1,0 +1,831 @@
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.33 (git sha1 2584903a060)
+
+
+-- Executing script file `generic_estimate.ys' --
+
+1. Executing Verilog-2005 frontend: ../ffpga/src/spi_byte_target.v
+Parsing Verilog input from `../ffpga/src/spi_byte_target.v' to AST representation.
+Generating RTLIL representation for module `\spi_byte_target'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: ../ffpga/src/mac_core.v
+Parsing Verilog input from `../ffpga/src/mac_core.v' to AST representation.
+Generating RTLIL representation for module `\mac_core'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: ../ffpga/src/top.v
+Parsing Verilog input from `../ffpga/src/top.v' to AST representation.
+Generating RTLIL representation for module `\top'.
+Successfully finished Verilog frontend.
+
+4. Executing SYNTH pass.
+
+4.1. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1.1. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \mac_core
+Used module:     \spi_byte_target
+Parameter \SYNC = 8'10100101
+
+4.1.2. Executing AST frontend in derive mode using pre-parsed AST for module `\spi_byte_target'.
+Parameter \SYNC = 8'10100101
+Generating RTLIL representation for module `$paramod\spi_byte_target\SYNC=8'10100101'.
+
+4.1.3. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \mac_core
+Used module:     $paramod\spi_byte_target\SYNC=8'10100101
+
+4.1.4. Analyzing design hierarchy..
+Top module:  \top
+Used module:     \mac_core
+Used module:     $paramod\spi_byte_target\SYNC=8'10100101
+Removing unused module `\spi_byte_target'.
+Removed 1 unused modules.
+
+4.2. Executing PROC pass (convert processes to netlists).
+
+4.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+4.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 5 switch rules as full_case in process $proc$../ffpga/src/top.v:125$28 in module top.
+Marked 1 switch rules as full_case in process $proc$../ffpga/src/top.v:70$26 in module top.
+Marked 2 switch rules as full_case in process $proc$../ffpga/src/mac_core.v:39$23 in module mac_core.
+Marked 5 switch rules as full_case in process $proc$../ffpga/src/spi_byte_target.v:66$62 in module $paramod\spi_byte_target\SYNC=8'10100101.
+Marked 1 switch rules as full_case in process $proc$../ffpga/src/spi_byte_target.v:42$51 in module $paramod\spi_byte_target\SYNC=8'10100101.
+Removed a total of 0 dead cases.
+
+4.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 10 redundant assignments.
+Promoted 0 assignments to connections.
+
+4.2.4. Executing PROC_INIT pass (extract init attributes).
+
+4.2.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_n_i in `\top.$proc$../ffpga/src/top.v:125$28'.
+Found async reset \rst_n in `\top.$proc$../ffpga/src/top.v:70$26'.
+Found async reset \rst_n in `\mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+Found async reset \rst_n in `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+Found async reset \rst_n in `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:42$51'.
+
+4.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~29 debug messages>
+
+4.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\top.$proc$../ffpga/src/top.v:125$28'.
+     1/12: $0\mac_p[0:0]
+     2/12: $0\clear_p[0:0]
+     3/12: $0\snap_st[7:0]
+     4/12: $0\snap_acc[31:0]
+     5/12: $0\err_cmd[0:0]
+     6/12: $0\err_frame[0:0]
+     7/12: $0\err_uninit[0:0]
+     8/12: $0\cmd[7:0]
+     9/12: $0\b_reg[7:0]
+    10/12: $0\a_reg[7:0]
+    11/12: $0\tx_next[7:0]
+    12/12: $0\init[0:0]
+Creating decoders for process `\top.$proc$../ffpga/src/top.v:70$26'.
+     1/1: $0\rst_sync[1:0]
+Creating decoders for process `\mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+     1/4: $0\prod_v[0:0]
+     2/4: $0\prod[15:0]
+     3/4: $0\ovf[0:0]
+     4/4: $0\acc[31:0]
+Creating decoders for process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+     1/9: $0\frame_end[0:0]
+     2/9: $0\frame_start[0:0]
+     3/9: $0\rx_valid[0:0]
+     4/9: $0\tx_shift[7:0]
+     5/9: $0\shift_in[6:0]
+     6/9: $0\bit_cnt[2:0]
+     7/9: $0\byte_count[2:0]
+     8/9: $0\rx_index[2:0]
+     9/9: $0\rx_byte[7:0]
+Creating decoders for process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:42$51'.
+     1/3: $0\mosi_s[1:0]
+     2/3: $0\ss_s[2:0]
+     3/3: $0\sck_s[2:0]
+
+4.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+4.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\top.\init' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$340' with positive edge clock and negative level reset.
+Creating register for signal `\top.\tx_next' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$341' with positive edge clock and negative level reset.
+Creating register for signal `\top.\clear_p' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$342' with positive edge clock and negative level reset.
+Creating register for signal `\top.\mac_p' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$343' with positive edge clock and negative level reset.
+Creating register for signal `\top.\a_reg' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$344' with positive edge clock and negative level reset.
+Creating register for signal `\top.\b_reg' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$345' with positive edge clock and negative level reset.
+Creating register for signal `\top.\cmd' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$346' with positive edge clock and negative level reset.
+Creating register for signal `\top.\err_uninit' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$347' with positive edge clock and negative level reset.
+Creating register for signal `\top.\err_frame' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$348' with positive edge clock and negative level reset.
+Creating register for signal `\top.\err_cmd' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$349' with positive edge clock and negative level reset.
+Creating register for signal `\top.\snap_acc' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$350' with positive edge clock and negative level reset.
+Creating register for signal `\top.\snap_st' using process `\top.$proc$../ffpga/src/top.v:125$28'.
+  created $adff cell `$procdff$351' with positive edge clock and negative level reset.
+Creating register for signal `\top.\rst_sync' using process `\top.$proc$../ffpga/src/top.v:70$26'.
+  created $adff cell `$procdff$352' with positive edge clock and negative level reset.
+Creating register for signal `\mac_core.\acc' using process `\mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+  created $adff cell `$procdff$353' with positive edge clock and negative level reset.
+Creating register for signal `\mac_core.\ovf' using process `\mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+  created $adff cell `$procdff$354' with positive edge clock and negative level reset.
+Creating register for signal `\mac_core.\prod' using process `\mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+  created $adff cell `$procdff$355' with positive edge clock and negative level reset.
+Creating register for signal `\mac_core.\prod_v' using process `\mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+  created $adff cell `$procdff$356' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\frame_start' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$357' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\frame_end' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$358' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\rx_valid' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$359' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\rx_byte' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$360' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\rx_index' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$361' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\byte_count' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$362' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\bit_cnt' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$363' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\shift_in' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$364' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\tx_shift' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+  created $adff cell `$procdff$365' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\sck_s' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:42$51'.
+  created $adff cell `$procdff$366' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\ss_s' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:42$51'.
+  created $adff cell `$procdff$367' with positive edge clock and negative level reset.
+Creating register for signal `$paramod\spi_byte_target\SYNC=8'10100101.\mosi_s' using process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:42$51'.
+  created $adff cell `$procdff$368' with positive edge clock and negative level reset.
+
+4.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 17 empty switches in `\top.$proc$../ffpga/src/top.v:125$28'.
+Removing empty process `top.$proc$../ffpga/src/top.v:125$28'.
+Removing empty process `top.$proc$../ffpga/src/top.v:70$26'.
+Found and cleaned up 4 empty switches in `\mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+Removing empty process `mac_core.$proc$../ffpga/src/mac_core.v:39$23'.
+Found and cleaned up 8 empty switches in `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+Removing empty process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:66$62'.
+Removing empty process `$paramod\spi_byte_target\SYNC=8'10100101.$proc$../ffpga/src/spi_byte_target.v:42$51'.
+Cleaned up 29 empty switches.
+
+4.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+<suppressed ~8 debug messages>
+Optimizing module mac_core.
+Optimizing module $paramod\spi_byte_target\SYNC=8'10100101.
+<suppressed ~8 debug messages>
+
+4.3. Executing FLATTEN pass (flatten design).
+Deleting now unused module mac_core.
+Deleting now unused module $paramod\spi_byte_target\SYNC=8'10100101.
+<suppressed ~2 debug messages>
+
+4.4. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.5. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 6 unused cells and 127 unused wires.
+<suppressed ~7 debug messages>
+
+4.6. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Found and reported 0 problems.
+
+4.7. Executing OPT pass (performing simple optimizations).
+
+4.7.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.7.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+<suppressed ~57 debug messages>
+Removed a total of 19 cells.
+
+4.7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~27 debug messages>
+
+4.7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+4.7.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.7.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 19 unused wires.
+<suppressed ~1 debug messages>
+
+4.7.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.7.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.7.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~27 debug messages>
+
+4.7.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+4.7.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.7.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.7.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.7.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.7.16. Finished OPT passes. (There is nothing left to do.)
+
+4.8. Executing FSM pass (extract and optimize FSM).
+
+4.8.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+4.8.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+4.8.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.8.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.8.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.8.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+4.8.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+4.8.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+4.9. Executing OPT pass (performing simple optimizations).
+
+4.9.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.9.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.9.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~27 debug messages>
+
+4.9.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+4.9.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.9.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$351 ($adff) from module top (D = { 3'010 \err_cmd \err_frame \err_uninit \u_mac.ovf \init }, Q = \snap_st).
+Adding EN signal on $procdff$350 ($adff) from module top (D = \u_mac.acc, Q = \snap_acc).
+Adding EN signal on $procdff$348 ($adff) from module top (D = $procmux$135_Y, Q = \err_frame).
+Adding EN signal on $procdff$347 ($adff) from module top (D = $procmux$154_Y, Q = \err_uninit).
+Adding EN signal on $procdff$345 ($adff) from module top (D = \u_spi.rx_byte, Q = \b_reg).
+Adding EN signal on $procdff$344 ($adff) from module top (D = \u_spi.rx_byte, Q = \a_reg).
+Adding EN signal on $procdff$341 ($adff) from module top (D = $0\tx_next[7:0], Q = \tx_next).
+Adding EN signal on $procdff$340 ($adff) from module top (D = 1'1, Q = \init).
+Adding EN signal on $flatten\u_spi.$procdff$365 ($adff) from module top (D = $flatten\u_spi.$0\tx_shift[7:0], Q = \u_spi.tx_shift).
+Adding EN signal on $flatten\u_spi.$procdff$364 ($adff) from module top (D = { \u_spi.shift_in [5:0] \u_spi.mosi_s [1] }, Q = \u_spi.shift_in).
+Adding EN signal on $flatten\u_spi.$procdff$363 ($adff) from module top (D = $flatten\u_spi.$0\bit_cnt[2:0], Q = \u_spi.bit_cnt).
+Adding EN signal on $flatten\u_spi.$procdff$362 ($adff) from module top (D = $flatten\u_spi.$0\byte_count[2:0], Q = \u_spi.byte_count).
+Adding EN signal on $flatten\u_spi.$procdff$361 ($adff) from module top (D = \u_spi.byte_count, Q = \u_spi.rx_index).
+Adding EN signal on $flatten\u_spi.$procdff$360 ($adff) from module top (D = { \u_spi.shift_in \u_spi.mosi_s [1] }, Q = \u_spi.rx_byte).
+Adding EN signal on $flatten\u_mac.$procdff$355 ($adff) from module top (D = $flatten\u_mac.$mul$../ffpga/src/mac_core.v:52$25_Y, Q = \u_mac.prod).
+Adding EN signal on $flatten\u_mac.$procdff$354 ($adff) from module top (D = $flatten\u_mac.$0\ovf[0:0], Q = \u_mac.ovf).
+Adding EN signal on $flatten\u_mac.$procdff$353 ($adff) from module top (D = $flatten\u_mac.$0\acc[31:0], Q = \u_mac.acc).
+Setting constant 0-bit at position 5 on $auto$ff.cc:266:slice$369 ($adffe) from module top.
+Setting constant 0-bit at position 7 on $auto$ff.cc:266:slice$369 ($adffe) from module top.
+
+4.9.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 33 unused cells and 33 unused wires.
+<suppressed ~34 debug messages>
+
+4.9.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+<suppressed ~8 debug messages>
+
+4.9.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.9.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~18 debug messages>
+
+4.9.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+4.9.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+<suppressed ~45 debug messages>
+Removed a total of 15 cells.
+
+4.9.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.9.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 15 unused wires.
+<suppressed ~1 debug messages>
+
+4.9.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.9.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.9.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~18 debug messages>
+
+4.9.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+4.9.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.9.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.9.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.9.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.9.23. Finished OPT passes. (There is nothing left to do.)
+
+4.10. Executing WREDUCE pass (reducing word size of cells).
+Removed top 6 bits (of 8) from port B of cell top.$eq$../ffpga/src/top.v:153$30 ($eq).
+Removed top 7 bits (of 8) from port B of cell top.$ne$../ffpga/src/top.v:157$31 ($ne).
+Removed top 6 bits (of 8) from port B of cell top.$ne$../ffpga/src/top.v:157$32 ($ne).
+Removed top 6 bits (of 8) from port B of cell top.$eq$../ffpga/src/top.v:162$34 ($eq).
+Removed top 6 bits (of 8) from port B of cell top.$eq$../ffpga/src/top.v:163$35 ($eq).
+Removed top 1 bits (of 2) from port B of cell top.$auto$opt_dff.cc:195:make_patterns_logic$413 ($ne).
+Removed top 2 bits (of 3) from port B of cell top.$eq$../ffpga/src/top.v:179$42 ($eq).
+Removed top 1 bits (of 3) from port B of cell top.$ne$../ffpga/src/top.v:190$43 ($ne).
+Removed top 7 bits (of 8) from port B of cell top.$procmux$130_CMP0 ($eq).
+Removed top 1 bits (of 2) from port B of cell top.$auto$opt_dff.cc:195:make_patterns_logic$379 ($ne).
+Removed top 1 bits (of 2) from port B of cell top.$auto$opt_dff.cc:195:make_patterns_logic$381 ($ne).
+Removed top 1 bits (of 3) from port B of cell top.$procmux$177_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell top.$procmux$186_CMP0 ($eq).
+Removed top 1 bits (of 8) from mux cell top.$procmux$191 ($mux).
+Removed top 1 bits (of 3) from port B of cell top.$procmux$197_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell top.$auto$opt_dff.cc:195:make_patterns_logic$386 ($ne).
+Removed top 8 bits (of 32) from FF cell top.$auto$ff.cc:266:slice$372 ($adffe).
+Removed top 3 bits (of 5) from port B of cell top.$auto$opt_dff.cc:195:make_patterns_logic$438 ($ne).
+Removed top 3 bits (of 6) from port B of cell top.$auto$opt_dff.cc:195:make_patterns_logic$436 ($ne).
+Removed top 2 bits (of 3) from port B of cell top.$flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:100$67 ($add).
+Removed top 2 bits (of 3) from port B of cell top.$flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:97$66 ($add).
+Removed top 8 bits (of 16) from port A of cell top.$flatten\u_mac.$mul$../ffpga/src/mac_core.v:52$25 ($mul).
+Removed top 8 bits (of 16) from port B of cell top.$flatten\u_mac.$mul$../ffpga/src/mac_core.v:52$25 ($mul).
+Removed top 1 bits (of 8) from wire top.$procmux$191_Y.
+Removed top 8 bits (of 32) from wire top.snap_acc.
+Removed top 3 bits (of 8) from wire top.status.
+
+4.11. Executing PEEPOPT pass (run peephole optimizers).
+
+4.12. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 3 unused wires.
+<suppressed ~1 debug messages>
+
+4.13. Executing TECHMAP pass (map to technology primitives).
+
+4.13.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/cmp2lut.v
+Parsing Verilog input from `/usr/bin/../share/yosys/cmp2lut.v' to AST representation.
+Generating RTLIL representation for module `\_90_lut_cmp_'.
+Successfully finished Verilog frontend.
+
+4.13.2. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/cmp2lcu.v
+Parsing Verilog input from `/usr/bin/../share/yosys/cmp2lcu.v' to AST representation.
+Generating RTLIL representation for module `\_80_lcu_cmp_'.
+Generating RTLIL representation for module `\$__CMP2LCU'.
+Successfully finished Verilog frontend.
+
+4.13.3. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~7 debug messages>
+
+4.14. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module top:
+  creating $macc model for $flatten\u_mac.$add$../ffpga/src/mac_core.v:35$19 ($add).
+  creating $macc model for $flatten\u_mac.$mul$../ffpga/src/mac_core.v:52$25 ($mul).
+  creating $macc model for $flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:100$67 ($add).
+  creating $macc model for $flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:97$66 ($add).
+  creating $alu model for $macc $flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:97$66.
+  creating $alu model for $macc $flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:100$67.
+  creating $alu model for $macc $flatten\u_mac.$add$../ffpga/src/mac_core.v:35$19.
+  creating $macc cell for $flatten\u_mac.$mul$../ffpga/src/mac_core.v:52$25: $auto$alumacc.cc:365:replace_macc$486
+  creating $alu cell for $flatten\u_mac.$add$../ffpga/src/mac_core.v:35$19: $auto$alumacc.cc:485:replace_alu$487
+  creating $alu cell for $flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:100$67: $auto$alumacc.cc:485:replace_alu$490
+  creating $alu cell for $flatten\u_spi.$add$../ffpga/src/spi_byte_target.v:97$66: $auto$alumacc.cc:485:replace_alu$493
+  created 3 $alu and 1 $macc cells.
+
+4.15. Executing SHARE pass (SAT-based resource sharing).
+
+4.16. Executing OPT pass (performing simple optimizations).
+
+4.16.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.16.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.16.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~18 debug messages>
+
+4.16.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+4.16.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.16.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.16.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.16.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.16.9. Finished OPT passes. (There is nothing left to do.)
+
+4.17. Executing MEMORY pass.
+
+4.17.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+4.17.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+4.17.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+4.17.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+4.17.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+4.17.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.17.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+4.17.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+4.17.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.17.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+4.18. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.19. Executing OPT pass (performing simple optimizations).
+
+4.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+<suppressed ~35 debug messages>
+
+4.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.19.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.19.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 26 unused wires.
+<suppressed ~1 debug messages>
+
+4.19.5. Finished fast OPT passes.
+
+4.20. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+4.21. Executing OPT pass (performing simple optimizations).
+
+4.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+<suppressed ~2 debug messages>
+
+4.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+4.21.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+4.21.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+    New ctrl vector for $pmux cell $procmux$135: $auto$opt_reduce.cc:134:opt_pmux$497
+    Consolidated identical input bits for $mux cell $procmux$191:
+      Old ports: A=7'0000000, B={ \snap_st [6] 1'0 \snap_st [4:0] }, Y=$auto$wreduce.cc:461:run$481 [6:0]
+      New ports: A=6'000000, B={ \snap_st [6] \snap_st [4:0] }, Y={ $auto$wreduce.cc:461:run$481 [6] $auto$wreduce.cc:461:run$481 [4:0] }
+      New connections: $auto$wreduce.cc:461:run$481 [5] = 1'0
+  Optimizing cells in module \top.
+Performed a total of 2 changes.
+
+4.21.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.21.6. Executing OPT_SHARE pass.
+
+4.21.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 2 unused wires.
+<suppressed ~1 debug messages>
+
+4.21.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+<suppressed ~1 debug messages>
+
+4.21.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.21.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~13 debug messages>
+
+4.21.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+4.21.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Removed a total of 0 cells.
+
+4.21.14. Executing OPT_SHARE pass.
+
+4.21.15. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+4.21.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.21.18. Finished OPT passes. (There is nothing left to do.)
+
+4.22. Executing TECHMAP pass (map to technology primitives).
+
+4.22.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+4.22.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $ne.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $logic_and.
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper maccmap for cells of type $macc.
+  add \a_reg * \b_reg (8x8 bits, signed)
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $logic_not.
+Using template $paramod$f42569e367821ad1b7d52f2d157a44ce80c766dc\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $adffe.
+Using extmapper simplemap for cells of type $adff.
+Using template $paramod$3ef7d3dd227da7627a99c5e5a6a4deb817573e39\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_or.
+Using template $paramod$fbc7873bff55778c0b3173955b7e4bce1d9d6834\_90_alu for cells of type $alu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000010000 for cells of type $fa.
+Using template $paramod$6df0329addda9228fcc2546de2aaf14ad26c98e1\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000100000 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000010000 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~976 debug messages>
+
+4.23. Executing OPT pass (performing simple optimizations).
+
+4.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+<suppressed ~503 debug messages>
+
+4.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+<suppressed ~444 debug messages>
+Removed a total of 148 cells.
+
+4.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 70 unused cells and 359 unused wires.
+<suppressed ~71 debug messages>
+
+4.23.5. Finished fast OPT passes.
+
+4.24. Executing ABC pass (technology mapping using ABC).
+
+4.24.1. Extracting gate netlist of module `\top' to `<abc-temp-dir>/input.blif'..
+Extracted 1069 gates and 1220 wires to a netlist network with 149 inputs and 105 outputs.
+
+4.24.1.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_lut <abc-temp-dir>/lutdefs.txt 
+ABC: + strash 
+ABC: + dretime 
+ABC: + if 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+4.24.1.2. Re-integrating ABC results.
+ABC RESULTS:              $lut cells:      383
+ABC RESULTS:        internal signals:      966
+ABC RESULTS:           input signals:      149
+ABC RESULTS:          output signals:      105
+Removing temp directory.
+
+4.25. Executing OPT pass (performing simple optimizations).
+
+4.25.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+4.25.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+<suppressed ~6 debug messages>
+Removed a total of 2 cells.
+
+4.25.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.25.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 543 unused wires.
+<suppressed ~6 debug messages>
+
+4.25.5. Finished fast OPT passes.
+
+4.26. Executing HIERARCHY pass (managing design hierarchy).
+
+4.26.1. Analyzing design hierarchy..
+Top module:  \top
+
+4.26.2. Analyzing design hierarchy..
+Top module:  \top
+Removed 0 unused modules.
+
+4.27. Printing statistics.
+
+=== top ===
+
+   Number of wires:                422
+   Number of wire bits:            760
+   Number of public wires:          69
+   Number of public wire bits:     303
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                543
+     $_DFFE_PN0P_                  134
+     $_DFFE_PN1P_                    4
+     $_DFF_PN0_                     22
+     $_DFF_PN1_                      3
+     $lut                          380
+
+4.28. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Found and reported 0 problems.
+
+5. Printing statistics.
+
+=== top ===
+
+   Number of wires:                422
+   Number of wire bits:            760
+   Number of public wires:          69
+   Number of public wire bits:     303
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                543
+     $_DFFE_PN0P_                  134
+     $_DFFE_PN1P_                    4
+     $_DFF_PN0_                     22
+     $_DFF_PN1_                      3
+     $lut                          380
+
+End of script. Logfile hash: b12129f62f, CPU: user 0.41s system 0.01s, MEM: 19.65 MB peak
+Yosys 0.33 (git sha1 2584903a060)
+Time spent: 22% 1x abc (0 sec), 21% 23x opt_expr (0 sec), ...

@@ -1,0 +1,16 @@
+=== Shrike Lite MAC testbench ===
+[1] reset state
+[2] MAC before CLEAR
+[3] CLEAR
+[4] golden vectors @ 1 MHz SCK
+  3016 vectors applied, final acc = 46486
+[5] golden vectors @ 2 MHz and 4 MHz SCK
+  300 vectors applied, final acc = -121387
+  300 vectors applied, final acc = -121387
+[6] frame-length and command checks
+[7] overflow boundaries (backdoor preload)
+[8] skipped (add +FULL_OVF to run 131072 real MACs)
+[9] rst_n pulse
+=== 11852 checks, 0 errors ===
+RESULT: PASS
+tb_mac.v:261: $finish called at 91437900000 (1ps)

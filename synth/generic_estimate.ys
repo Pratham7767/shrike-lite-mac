@@ -1,0 +1,5 @@
+# Generic Yosys LUT-5 estimate -- NOT the Renesas flow, NOT a fit guarantee.
+# The authoritative numbers come from Go Configure's synthesis/PnR reports.
+read_verilog ../ffpga/src/spi_byte_target.v ../ffpga/src/mac_core.v ../ffpga/src/top.v
+synth -top top -flatten -lut 5
+stat
